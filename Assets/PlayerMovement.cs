@@ -17,10 +17,10 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
 
-        //if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
-        //{
-        //    rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
-        //}
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+        {
+            rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        }
     }
     void FixedUpdate()
     {
