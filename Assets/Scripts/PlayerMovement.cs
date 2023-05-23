@@ -27,6 +27,28 @@ public class PlayerMovement : MonoBehaviour
         inputX = joystick.Horizontal;
         FlipsSprite();
         WalkAnim();
+        //Set AirSpeed in animator
+        anim.SetFloat("AirSpeedY", rb.velocity.y);
+        //Sets Grounded bool to animator
+        anim.SetBool("Grounded", IsGrounded());
+        //KeyboardInputsForTesting();
+    }
+
+    private void KeyboardInputsForTesting()
+    {
+        inputX = Input.GetAxisRaw("Horizontal");
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            var randNum = UnityEngine.Random.Range(0, attackStrings.Length);
+            anim.SetTrigger(attackStrings[randNum]);
+        }
+
+        if (Input.GetButtonDown("Jump") && IsGrounded())
+        {
+            anim.SetTrigger("Jump");
+            rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        }
     }
 
     public void Attack()
@@ -38,11 +60,23 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
-        //Jump input
+        //Forces player up if grounded
         if (IsGrounded())
         {
+            anim.SetTrigger("Jump");
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
         }
+    }
+    public void Block()
+    {
+        //anim.SetTrigger("Block");//Blocked Attack, sets animation
+        anim.SetBool("IdleBlock", true);
+        moveSpeed = 0;//sets speed to 0 so player wont move
+    }
+    public void UnBlock()
+    {
+        anim.SetBool("IdleBlock", false);
+        moveSpeed = 6;//resets the speed
     }
     private void WalkAnim()
     {
