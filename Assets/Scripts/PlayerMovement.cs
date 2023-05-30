@@ -102,4 +102,5 @@ public class PlayerMovement : MonoBehaviour
         //checks if grounded
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, ground);
     }
+   
 }
